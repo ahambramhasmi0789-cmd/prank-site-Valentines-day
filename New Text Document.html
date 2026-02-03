@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Valentine</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+body{
+    margin:0;
+    height:100vh;
+    overflow:hidden;
+    background:linear-gradient(135deg,#ff9a9e,#fad0c4);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-family:Arial,sans-serif;
+}
+.card{
+    background:white;
+    padding:30px;
+    border-radius:16px;
+    box-shadow:0 20px 40px rgba(0,0,0,.2);
+    text-align:center;
+    position:relative;
+    width:90%;
+    max-width:320px;
+    z-index:2;
+}
+button{
+    padding:10px 24px;
+    font-size:16px;
+    border:none;
+    border-radius:10px;
+    cursor:pointer;
+}
+#yes{background:#4CAF50;color:white;margin-right:10px;}
+#no{background:#f44336;color:white;position:absolute;}
+
+.credit{
+    margin-top:20px;
+    font-size:12px;
+    color:#888;
+}
+
+img{
+    max-width:90%;
+    border-radius:16px;
+    box-shadow:0 10px 30px rgba(0,0,0,.3);
+}
+
+/* Hearts */
+.heart{
+    position:fixed;
+    bottom:-20px;
+    font-size:18px;
+    animation:floatUp linear forwards;
+    pointer-events:none;
+    opacity:.85;
+}
+@keyframes floatUp{
+    from{transform:translateY(0) scale(1);opacity:1;}
+    to{transform:translateY(-110vh) scale(1.8);opacity:0;}
+}
+</style>
+</head>
+<body>
+
+<div class="card">
+    <h1>Will you be my Valentine?? 💘</h1>
+    <button id="yes" onclick="yesClick()">Yes</button>
+    <button id="no">No</button>
+    <p class="credit">Created by Hrituraj Acharjee</p>
+</div>
+
+<audio id="charm">
+<source src="data:audio/wav;base64,UklGRlQAAABXQVZFZm10IBAAAAABAAEAESsAACJWAAACABAAZGF0YQAAAP//AAD//wAA//8AAP//AAD//wAA//8AAP//AAD//wAA" type="audio/wav">
+</audio>
+
+<script>
+const noBtn = document.getElementById("no");
+const card = document.querySelector(".card");
+
+function moveButton(){
+    const c = card.getBoundingClientRect();
+    const b = noBtn.getBoundingClientRect();
+    const maxX = c.width - b.width - 20;
+    const maxY = c.height - b.height - 20;
+    noBtn.style.left = Math.random()*maxX + "px";
+    noBtn.style.top  = Math.random()*maxY + "px";
+}
+noBtn.addEventListener("mouseenter", moveButton);
+
+function yesClick(){
+    document.getElementById("charm").play();
+    document.body.innerHTML = `
+      <div style="display:flex;justify-content:center;align-items:center;height:100vh;background:#000;">
+        <img src="image.png">
+      </div>`;
+}
+
+setInterval(()=>{
+    const h=document.createElement("div");
+    h.className="heart";
+    h.textContent="💖";
+    h.style.left=Math.random()*100+"vw";
+    h.style.animationDuration=(3+Math.random()*3)+"s";
+    h.style.fontSize=(14+Math.random()*20)+"px";
+    document.body.appendChild(h);
+    setTimeout(()=>h.remove(),6000);
+},300);
+</script>
+
+</body>
+</html>
